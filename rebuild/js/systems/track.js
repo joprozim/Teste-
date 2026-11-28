@@ -1,0 +1,2 @@
+export function spawnObstacle(state){const lane=Math.floor(Math.random()*3);state.obstacles.push({lane,z:0});}
+export function updateTrack(state,dt){state.distance+=state.speed*dt/10;state.trackOffset=(state.trackOffset+state.speed*dt)%80;state.spawnIn-=dt;if(state.spawnIn<=0){spawnObstacle(state);state.spawnIn=Math.max(.62,1.35-state.distance/900);}for(const o of state.obstacles)o.z+=state.speed*dt;state.obstacles=state.obstacles.filter(o=>o.z<720);}
