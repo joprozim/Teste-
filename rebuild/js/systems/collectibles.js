@@ -1,0 +1,1 @@
+export function collectCoins(state){const remaining=[];for(const coin of state.coinsOnTrack){if(coin.z>=500&&coin.z<=565&&coin.lane===state.player.lane){state.coins+=1;}else{remaining.push(coin);}}state.coinsOnTrack=remaining;return state.coins;}
