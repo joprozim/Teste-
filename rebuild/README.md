@@ -1,21 +1,27 @@
 # Neon Runner Mega — reconstrução modular
 
-Esta pasta contém a primeira base modular independente. Ela não substitui a versão publicada nem altera V6/V7.
+Base independente de reconstrução. A versão oficial V6 e os arquivos antigos permanecem intactos.
 
 ## Executar
-Abra `index.html` por um servidor estático (por exemplo, GitHub Pages apontando para esta pasta ou um servidor local). Os módulos ES não devem ser testados abrindo o arquivo diretamente via `file://`.
+Sirva esta pasta por um servidor estático e abra `index.html`. Os módulos ES não funcionam corretamente via `file://`.
 
 ## Testes
-Com Node.js instalado, dentro desta pasta execute `npm test`.
+Com Node.js, execute `npm test` dentro desta pasta.
 
-## Módulos
-- `js/core/state.js`: estado e transições.
-- `js/core/loop.js`: atualização e delta de tempo.
-- `js/entities/player.js`: movimento e pulo.
-- `js/systems/input.js`: teclado e toque.
-- `js/systems/track.js`: pista, obstáculos e fileiras de moedas.
-- `js/systems/collectibles.js`: coleta de moedas e atualização do contador.
-- `js/systems/collision.js`: colisões.
-- `js/main.js`: renderização e ligação da interface.
+## Mecânicas atuais
+- Três pistas e corrida com contagem regressiva.
+- Movimento por teclado e gestos de toque (swipe).
+- Pulo para evitar barreiras.
+- Deslize para passar por obstáculos baixos.
+- Moedas coletáveis em fileiras.
+- Power-up de escudo que absorve uma colisão.
+- HUD com distância, moedas e estado do escudo.
 
-Esta é a fundação jogável mínima; os sistemas e a identidade visual da base antiga serão migrados em etapas, após validar o núcleo.
+## Organização
+- `js/core/`: estado e loop.
+- `js/entities/`: movimento do jogador.
+- `js/systems/`: entrada, pista, colisões e colecionáveis.
+- `tests/`: regressões automatizadas.
+
+## Próxima etapa
+Validar no Node e em navegador móvel; depois migrar progressão, personagens, loja, missões, mapas e identidade visual da versão de referência. Esta reconstrução ainda não substitui o jogo completo.
