@@ -1,3 +1,3 @@
-import{updatePlayer}from"../entities/player.js";import{updateTrack}from"../systems/track.js";import{hasCollision}from"../systems/collision.js";import{finishRun}from"./state.js";
-export function updateGame(state,dt){if(state.phase==="countdown"){state.countdown-=dt;if(state.countdown<=0){state.phase="run";state.countdown=0;}return;}if(state.phase!=="run")return;state.elapsed+=dt;updatePlayer(state.player,dt);updateTrack(state,dt);if(hasCollision(state))finishRun(state);}
+import{updatePlayer}from"../entities/player.js";import{updateTrack}from"../systems/track.js";import{hasCollision}from"../systems/collision.js";import{collectCoins}from"../systems/collectibles.js";import{finishRun}from"./state.js";
+export function updateGame(state,dt){if(state.phase==="countdown"){state.countdown-=dt;if(state.countdown<=0){state.phase="run";state.countdown=0;}return;}if(state.phase!=="run")return;state.elapsed+=dt;updatePlayer(state.player,dt);updateTrack(state,dt);collectCoins(state);if(hasCollision(state))finishRun(state);}
 export function frameDelta(now,last){return Math.min(.05,Math.max(0,(now-last)/1000));}
