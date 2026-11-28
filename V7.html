@@ -1876,7 +1876,8 @@ function step(dt){
   const c=G.heroOverride?CH.find(x=>x.id===G.heroOverride):CHR();
   const lv=G.lv,lvMult=1+(lv-1)*.05;
   const charSpd=c.id==='blaze'?1.15:1;
-  const weatherSpd=WEATHERS[S.weather.cur||'clear'].spd;
+  const weatherKey=(S.weather&&WEATHERS[S.weather.cur])?S.weather.cur:'clear';
+  const weatherSpd=WEATHERS[weatherKey].spd;
   G.sp=Math.min((G.dmod==='turbo_world'?17.5:14)+G.t*.25,34)*charSpd*weatherSpd;
   dynF+=(BASE_F+Math.max(0,(G.sp-14)*0.15)-dynF)*Math.min(1,dt*4);
 
@@ -2690,8 +2691,15 @@ function loop(t){
   const dt=Math.min(.05,(t-lastT)/1000)||.016;
   lastT=t;
   rot+=dt;
-  step(dt);
-  render(dt);
+  try{
+    // Mantém o loop vivo caso um sistema opcional falhe em um aparelho/navegador.
+    step(dt);
+  }catch(err){
+    console.error('Neon Runner: erro no ciclo do jogo',err);
+    if(G){G.pause=1;DOM.big.textContent='ERRO — toque em ⏸ e volte ao menu';}
+    stopMusic();
+  }
+  try{render(dt)}catch(err){console.error('Neon Runner: erro ao desenhar',err)}
   requestAnimationFrame(loop);
 }
 
