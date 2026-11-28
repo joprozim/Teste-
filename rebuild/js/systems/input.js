@@ -1,0 +1,4 @@
+import{movePlayer,jumpPlayer}from"../entities/player.js";
+export function attachInput(canvas,state){const onKey=e=>{if(state.phase!=="run")return;if(["ArrowLeft","a","A"].includes(e.key)){e.preventDefault();movePlayer(state.player,-1);}else if(["ArrowRight","d","D"].includes(e.key)){e.preventDefault();movePlayer(state.player,1);}else if(["ArrowUp"," ","w","W"].includes(e.key)){e.preventDefault();jumpPlayer(state.player);}};
+const onPointer=e=>{if(state.phase!=="run")return;const r=canvas.getBoundingClientRect();const x=(e.clientX-r.left)/r.width;if(x<.34)movePlayer(state.player,-1);else if(x>.66)movePlayer(state.player,1);else jumpPlayer(state.player);};
+window.addEventListener("keydown",onKey);canvas.addEventListener("pointerdown",onPointer);return()=>{window.removeEventListener("keydown",onKey);canvas.removeEventListener("pointerdown",onPointer);};}
