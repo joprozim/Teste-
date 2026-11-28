@@ -1,0 +1,206 @@
+NEON RUNNER MEGA — ARQUIVO DE CONTINUIDADE
+Atualizado em: 2026-11-28
+Repositório: https://github.com/joprozim/Teste-
+Branch principal de trabalho escolhida: v7-mega-update
+Versão oficial: main (V6; não alterar sem autorização explícita)
+
+============================================================
+1. OBJETIVO DO PROJETO
+============================================================
+
+O usuário quer reconstruir/evoluir o Neon Runner Mega usando o código atual como referência, mas sem continuar juntando tudo em um único arquivo gigante. A ideia é analisar o funcionamento, separar a lógica em arquivos organizados e manter o jogo jogável em cada etapa.
+
+Preferência de trabalho:
+- Respostas curtas e diretas.
+- Fazer uma coisa por vez.
+- Não criar branches novas para cada correção.
+- Trabalhar somente na branch v7-mega-update.
+- Não mexer na main/V6 até o usuário aprovar.
+- Não afirmar que o jogo foi testado no navegador quando isso não ocorreu.
+
+============================================================
+2. ESTADO ATUAL DO GITHUB
+============================================================
+
+Repositório: joprozim/Teste-
+
+Branch canônica de desenvolvimento:
+- v7-mega-update
+
+Versão oficial:
+- main
+- O histórico anterior registra que a V6 foi publicada na main.
+- A V6 oficial deve permanecer protegida.
+
+Branches adicionais criadas durante tentativas anteriores:
+- v7-stability-fix: contém uma tentativa de proteção do loop e validação do clima; não resolveu o travamento e NÃO deve ser tratada como branch principal.
+- v4-diagnostico: contém uma cópia da V4 com captura de erros; não foi publicada no GitHub Pages e o link entregue anteriormente abria a visualização de código do GitHub, não uma página executável.
+Não criar mais branches para este trabalho. Continuar na v7-mega-update.
+
+============================================================
+3. ARQUIVOS INSPECIONADOS
+============================================================
+
+Foram consultados na branch v7-mega-update:
+- V7.html
+- V7_NOTAS.md
+- index.html
+- css/style.css
+- js/game.js
+- server/index.js
+- server/server.py
+- server/package.json
+- server/README.md
+- README.md
+- .github/workflows/V6.html
+
+Também foram consultados na main:
+- V4.html
+- V6.html
+
+Tamanhos observados:
+- V4.html: aproximadamente 84.781 caracteres, 1.934 linhas.
+- V7.html: aproximadamente 143.043 caracteres, 2.716 linhas.
+
+Observação importante:
+- A V7 é um arquivo monolítico: HTML, CSS e grande parte da lógica JavaScript estão concentrados em V7.html.
+- css/style.css é um arquivo legado e não contém o CSS principal da V7.
+- js/game.js é somente um placeholder, não contém a lógica principal do jogo.
+- server/index.js e server/server.py são servidores separados para ranking/recursos online; não controlam o movimento local do personagem.
+- README.md descreve uma arquitetura modular desejada, mas a implementação atual ainda não corresponde totalmente a essa estrutura.
+- .github/workflows/V6.html é um arquivo HTML antigo em um caminho de workflows; não é um workflow YAML.
+
+============================================================
+4. O QUE A V4 MOSTRA
+============================================================
+
+A V4 tem um fluxo de jogo mais simples e concentrado:
+- startCutscene() chama go().
+- go() prepara o estado G, configura modo e HUD, e muda mode para 'cd'.
+- step(dt) processa a contagem regressiva: diminui G.cd, mostra 3, 2, 1 e depois muda mode para 'run'.
+- Quando mode é 'run', step(dt) atualiza distância, velocidade, personagem, obstáculos e física.
+- loop(ts) chama drawLobby(dt) se não existe G; caso exista G, chama step(...) e draw(); depois agenda requestAnimationFrame(loop).
+
+A V4 tem aproximadamente 84,8 mil caracteres. Ela deve ser usada como referência de comportamento e estrutura de partida, não copiada cegamente.
+
+============================================================
+5. O QUE A V7 ADICIONOU / CONTÉM
+============================================================
+
+A V7 tem aproximadamente 143 mil caracteres e 2.716 linhas.
+O arquivo inclui sistemas adicionais em relação à V4, entre eles:
+- Mais personagens e habilidades.
+- Sistemas de ascensão/evolução de personagens.
+- Equipe/revezamento.
+- Clima dinâmico.
+- Rivais/eco.
+- Checkpoints.
+- Portais e túnel secreto.
+- Árvores de melhorias.
+- Títulos, tokens e álbum.
+- Fever/combo.
+- HUD de equipe, clima, recordes e perfil.
+- Loja e cosméticos.
+- Missões e passe.
+- Ranking, desafios e fantasmas online.
+- Estatísticas de carreira, conquistas e backup/importação de save.
+- Personagem Aurora e passe de carreira adicionados na atualização V7.
+
+A V7 tem funções como:
+- updateWeather()
+- setupTeamForRun()
+- spawnCheckpointArch()
+- checkCheckpoint()
+- enterSecretTunnel()
+- updateSecretTunnel()
+- updateFever()
+- updateCamera()
+- updateDangerEdge()
+- bossAttack()
+- go()
+- step()
+- loop()
+
+============================================================
+6. BUG ATUAL RELATADO PELO USUÁRIO
+============================================================
+
+Sintoma observado:
+- No iPhone/Safari, a corrida mostra a contagem regressiva 3, 2, 1.
+- Quando deveria começar a correr, o personagem fica parado e a distância permanece em 0.
+- Em uma tentativa anterior, apareceu uma mensagem gigante na tela: "ERRO — toque em ⏸ e volte ao menu".
+- A tentativa de proteção anterior pausava o jogo e não corrigia a causa.
+
+O que sabemos:
+- A falha aparece na transição da contagem regressiva para a corrida.
+- Não temos ainda a mensagem/stack trace original do erro.
+- A causa exata ainda NÃO foi confirmada.
+- Não dizer que o problema é definitivamente o clima ou qualquer função específica sem evidência.
+
+============================================================
+7. TENTATIVAS ANTERIORES E LIMITAÇÕES
+============================================================
+
+- Foi criada uma V7 baseada no jogo anterior, com estatísticas, passe, Aurora e outras novidades.
+- Foi criada a branch v7-stability-fix com uma proteção para valores inválidos de clima e try/catch no loop.
+- Essa proteção mostrou uma mensagem de erro enorme e não resolveu a corrida parada.
+- Foi criada uma V4_DIAGNOSTICO.html na branch v4-diagnostico com captura de erros globais e botão para copiar log.
+- O link enviado para essa V4 de diagnóstico abria a página de código do GitHub (blob), não executava o jogo.
+- Portanto, o usuário não conseguiu ver o painel de log como esperado.
+- Nenhum teste real de navegador/Safari foi executado pelo assistente.
+
+============================================================
+8. PLANO DE RECONSTRUÇÃO — AINDA NÃO EXECUTADO
+============================================================
+
+Próximas etapas propostas:
+1. Continuar exclusivamente na branch v7-mega-update.
+2. Fazer uma auditoria técnica detalhada do fluxo go() -> mode='cd' -> step(dt) -> mode='run' -> atualização de movimento.
+3. Comparar os trechos equivalentes entre V4.html e V7.html para identificar quais chamadas/sistemas extras são executados durante a inicialização da corrida.
+4. Recriar a V7 de forma modular, reaproveitando o código existente e preservando o comportamento:
+   - index.html: estrutura da página.
+   - css/: estilos.
+   - js/core/: estado, inicialização, loop e física.
+   - js/systems/: clima, câmera, equipe, checkpoints, eventos etc.
+   - js/ui/: lobby, HUD, loja, passe e menus.
+   - js/data/: personagens, itens, mapas e configurações.
+5. Migrar uma parte de cada vez, verificando que o jogo ainda inicia e o personagem se move.
+6. Adicionar captura de erros útil e discreta, com stack trace e fase do jogo, sem cobrir a tela inteira.
+7. Testar no Safari/iPhone e desktop antes de qualquer publicação.
+8. Só depois de o movimento funcionar, voltar às melhorias de personagens, loja e passe.
+9. Não fazer merge para main sem autorização explícita do usuário.
+
+============================================================
+9. O QUE JÁ FOI FEITO
+============================================================
+
+- V4 e V7 foram abertas e inspecionadas no GitHub.
+- A estrutura do repositório foi inspecionada.
+- Identificado que a lógica principal está concentrada em V7.html.
+- Identificado que js/game.js é placeholder e css/style.css não é o CSS principal da V7.
+- Comparados os fluxos de início e loop da V4 com a estrutura da V7.
+- Definida a branch v7-mega-update como única branch de trabalho daqui para frente.
+- Definido que main/V6 não será alterada.
+
+============================================================
+10. O QUE AINDA NÃO FOI FEITO
+============================================================
+
+- A causa exata do travamento ainda não foi encontrada.
+- O log real do Safari ainda não foi capturado.
+- A V7 ainda não foi reconstruída em módulos.
+- A lógica de movimento ainda não foi isolada e testada.
+- Nenhum teste de navegador foi executado pelo assistente.
+- A V7 ainda não foi aprovada pelo usuário.
+- Nenhuma nova versão deve ser publicada na main por enquanto.
+
+============================================================
+11. INSTRUÇÃO PARA A PRÓXIMA CONVERSA
+============================================================
+
+Começar lendo este arquivo e continuar no repositório joprozim/Teste-, branch v7-mega-update.
+Não criar outra branch.
+Não alterar a main.
+Não começar adicionando novidades.
+Primeiro auditar e reconstruir o fluxo da corrida, usando V4.html como referência funcional e V7.html como base de recursos.
+Trabalhar em etapas pequenas e registrar neste arquivo cada mudança, teste e pendência.
