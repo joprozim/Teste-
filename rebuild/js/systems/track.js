@@ -3,9 +3,12 @@ export function spawnObstacle(state){
   state.obstacles.push({lane,z:0,type});
 }
 export function updateTrack(state,dt){
-  state.distance+=state.speed*dt/10;state.trackOffset=(state.trackOffset+state.speed*dt)%80;
+  state.distance+=state.speed*dt/10;
+  state.level=1+Math.floor(state.distance/500);
+  state.speed=Math.min(520,state.baseSpeed+(state.level-1)*12);
+  state.trackOffset=(state.trackOffset+state.speed*dt)%80;
   state.spawnIn-=dt;
-  if(state.spawnIn<=0){spawnObstacle(state);state.spawnIn=Math.max(.62,1.35-state.distance/900);}
+  if(state.spawnIn<=0){spawnObstacle(state);state.spawnIn=Math.max(.48,1.35-state.distance/1100);}
   for(const o of state.obstacles)o.z+=state.speed*dt;
   state.obstacles=state.obstacles.filter(o=>o.z<720);
   for(const c of state.coinsOnTrack)c.z+=state.speed*dt;
