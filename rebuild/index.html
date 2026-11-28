@@ -14,19 +14,24 @@
     <section id="hud" aria-live="polite">
       <span>Distância: <strong id="distance">0</strong> m</span>
       <span>Moedas: <strong id="coins">0</strong></span>
+      <span>Nível: <strong id="level">1</strong></span>
       <span id="shield-status">SEM ESCUDO</span>
     </section>
     <div id="countdown" aria-live="assertive"></div>
     <section id="menu">
       <h1>NEON RUNNER</h1>
       <p>Corra, desvie, pule e deslize. Colete moedas e escudos!</p>
+      <div class="records"><span>Recorde: <strong id="menu-best">0</strong></span><span>Moedas totais: <strong id="menu-wallet">0</strong></span></div>
       <button id="start-button" type="button">JOGAR</button>
       <p class="hint">← → mudar de pista · ↑ pular · ↓ deslizar<br>Celular: deslize o dedo para os lados, para cima ou para baixo.</p>
     </section>
     <section id="game-over" hidden>
       <h2>FIM DE JOGO</h2>
       <p>Você percorreu <strong id="final-distance">0</strong> metros.</p>
+      <p>Pontuação: <strong id="final-score">0</strong> · Moedas: <strong id="final-coins">0</strong></p>
+      <p>Recorde: <strong id="final-best">0</strong></p>
       <button id="restart-button" type="button">JOGAR DE NOVO</button>
+      <button id="menu-button" class="secondary" type="button">VOLTAR AO MENU</button>
     </section>
   </main>
   <script type="module" src="./js/main.js"></script>
