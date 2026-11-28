@@ -13,7 +13,8 @@ Com Node.js instalado, dentro desta pasta execute `npm test`.
 - `js/core/loop.js`: atualização e delta de tempo.
 - `js/entities/player.js`: movimento e pulo.
 - `js/systems/input.js`: teclado e toque.
-- `js/systems/track.js`: pista e obstáculos.
+- `js/systems/track.js`: pista, obstáculos e fileiras de moedas.
+- `js/systems/collectibles.js`: coleta de moedas e atualização do contador.
 - `js/systems/collision.js`: colisões.
 - `js/main.js`: renderização e ligação da interface.
 
