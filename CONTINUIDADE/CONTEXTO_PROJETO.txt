@@ -354,3 +354,50 @@ Arquivos alterados:
 - rebuild/README.md: documentação atualizada.
 Comportamento esperado: moedas surgem em fileiras na pista, aproximam-se do jogador, são coletadas ao cruzar a zona de coleta na mesma faixa e incrementam o HUD.
 Validação: alteração estática revisada; não foi executado teste em navegador/Safari nem Node nesta etapa. Próximo passo: executar testes e validar a corrida; depois migrar controles de deslizar/obstáculos avançados ou sistema de power-ups.
+
+
+
+============================================================
+ATUALIZAÇÃO 2 — MECÂNICAS DE MOVIMENTO E POWER-UP (2026-11-28)
+============================================================
+Reconstrução ampliada em rebuild/, mantendo a branch v7-mega-update e sem alterar a V6 oficial.
+
+Mecânicas adicionadas:
+- Deslizar por tempo limitado para passar por obstáculos baixos.
+- Dois tipos de obstáculo: barreira que exige pulo e obstáculo baixo que exige deslize.
+- Power-up de escudo que aparece na pista e absorve uma colisão.
+- Controles por swipe no celular: esquerda/direita para trocar de pista, cima para pular e baixo para deslizar.
+- Controles de teclado ampliados com seta para baixo/S.
+- HUD agora mostra estado do escudo.
+- Renderização diferenciada para obstáculos baixos e power-up.
+- Testes adicionais para deslize, tipos de obstáculo, escudo e coleta do power-up.
+
+Arquivos alterados:
+- rebuild/js/core/state.js
+- rebuild/js/entities/player.js
+- rebuild/js/systems/input.js
+- rebuild/js/systems/track.js
+- rebuild/js/systems/collision.js
+- rebuild/js/systems/collectibles.js
+- rebuild/js/core/loop.js
+- rebuild/js/main.js
+- rebuild/index.html
+- rebuild/css/game.css
+- rebuild/tests/core.test.js
+- rebuild/README.md
+
+Último commit desta etapa: 7b70c44f7eaecdd793cd0072771c39d9f3538d82.
+Mensagem: feat(rebuild): expand gameplay and touch controls.
+
+Validação:
+- Os arquivos e a árvore da branch foram conferidos pelo GitHub após as alterações.
+- A tentativa de clonar o repositório para executar npm test localmente falhou porque o ambiente desta sessão não conseguiu resolver github.com.
+- Portanto, os testes foram ampliados no código, mas ainda NÃO foram executados.
+- O jogo ainda NÃO foi testado visualmente em navegador ou Safari/iPhone.
+- A V6 e os arquivos principais antigos continuam preservados; a reconstrução permanece isolada em rebuild/.
+
+Próxima etapa:
+1. Executar npm test em ambiente com Node.
+2. Corrigir eventuais regressões e validar swipe/toque no Safari.
+3. Migrar progressão, velocidade gradual, recorde e telas de resultado.
+4. Auditar a NeonRunner_PLAY.html e migrar recursos da referência em módulos, sem transformar rebuild em monólito.
