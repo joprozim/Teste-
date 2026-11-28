@@ -1,0 +1,27 @@
+name: Rebuild tests
+
+on:
+  push:
+    branches:
+      - v7-mega-update
+    paths:
+      - "rebuild/**"
+      - ".github/workflows/rebuild-tests.yml"
+  pull_request:
+    paths:
+      - "rebuild/**"
+      - ".github/workflows/rebuild-tests.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run rebuild tests
+        working-directory: rebuild
+        run: npm test
