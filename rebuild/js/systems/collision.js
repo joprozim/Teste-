@@ -1,0 +1,1 @@
+export function hasCollision(state){return state.obstacles.some(o=>o.z>500&&o.z<565&&o.lane===state.player.lane&&state.player.jump<42);}
