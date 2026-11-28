@@ -338,3 +338,19 @@ Próximos passos:
 3. Mapear com precisão o escopo de step() e over() em NeonRunner_PLAY.html e comparar com V6/V7.
 4. Só depois começar a migração de sistemas visuais e recursos existentes, preservando cada subsistema em módulos separados.
 5. Não apontar o index principal do site para rebuild/ até a base passar pela validação.
+
+
+============================================================
+ATUALIZAÇÃO 1 — COLETA DE MOEDAS (2026-11-28)
+============================================================
+Foi iniciada a migração incremental de sistemas para rebuild/.
+Arquivos alterados:
+- rebuild/js/core/state.js: estado coinsOnTrack e temporizador de geração.
+- rebuild/js/systems/track.js: geração de fileiras de quatro moedas e avanço pela pista.
+- rebuild/js/systems/collectibles.js: novo módulo que coleta moedas quando passam pela zona do jogador e pista correspondente.
+- rebuild/js/core/loop.js: integra coleta ao ciclo de atualização.
+- rebuild/js/main.js: desenha moedas douradas no canvas.
+- rebuild/tests/core.test.js: teste de coleta na pista correta.
+- rebuild/README.md: documentação atualizada.
+Comportamento esperado: moedas surgem em fileiras na pista, aproximam-se do jogador, são coletadas ao cruzar a zona de coleta na mesma faixa e incrementam o HUD.
+Validação: alteração estática revisada; não foi executado teste em navegador/Safari nem Node nesta etapa. Próximo passo: executar testes e validar a corrida; depois migrar controles de deslizar/obstáculos avançados ou sistema de power-ups.
