@@ -6,6 +6,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>
 /* ===== ESTILOS EXISTENTES PRESERVADOS ===== */
+/* V6: foco visível e respeito à preferência de movimento do sistema. */
+.b:focus-visible{outline:3px solid #fff;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.anim-in,.badge,#cb.pulse,.b.big{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 :root{
   color-scheme:dark;
   --ac:#ffcc00;
@@ -976,6 +979,7 @@ function lobby(){
         <button class="b s" onclick="album()">📚</button>
         <button class="b s" onclick="cfg()">⚙️</button>
         <button class="b s" onclick="careerStats()">📊</button>
+        <button class="b s" onclick="careerAchievements()">🏅</button>
       </div>
     </div>
   </div>
@@ -1453,6 +1457,28 @@ function careerStats(){
     <small>As estatísticas começam a contar a partir das corridas feitas na V6. Seu progresso antigo continua preservado.</small>
     <div class="row"><button class="b" onclick="lobby()">Voltar</button></div>
   </div>`);
+}
+
+function careerAchievements(){
+  const st=S.v6Stats||{runs:0,totalDistance:0,totalCoins:0,totalJumps:0,totalSkills:0,totalSeconds:0,bestRun:0};
+  const achievements=[
+    {icon:'🏁',name:'Primeira corrida',desc:'Conclua sua primeira corrida.',value:Number(st.runs)||0,target:1},
+    {icon:'👟',name:'Corredor frequente',desc:'Conclua 10 corridas.',value:Number(st.runs)||0,target:10},
+    {icon:'🏃',name:'Lenda das pistas',desc:'Conclua 50 corridas.',value:Number(st.runs)||0,target:50},
+    {icon:'🛣️',name:'Primeiros quilômetros',desc:'Percorra 1.000 metros no total.',value:Number(st.totalDistance)||0,target:1000},
+    {icon:'🌍',name:'Explorador neon',desc:'Percorra 25.000 metros no total.',value:Number(st.totalDistance)||0,target:25000},
+    {icon:'🪙',name:'Ímã de moedas',desc:'Colete 500 moedas nas corridas.',value:Number(st.totalCoins)||0,target:500},
+    {icon:'💰',name:'Fortuna neon',desc:'Colete 5.000 moedas nas corridas.',value:Number(st.totalCoins)||0,target:5000},
+    {icon:'🦘',name:'Pés ligeiros',desc:'Faça 100 pulos.',value:Number(st.totalJumps)||0,target:100},
+    {icon:'✨',name:'Estilo nas pistas',desc:'Faça 50 manobras.',value:Number(st.totalSkills)||0,target:50},
+    {icon:'🏆',name:'Pontuação de respeito',desc:'Alcance 5.000 pontos em uma corrida.',value:Number(st.bestRun)||0,target:5000}
+  ];
+  const unlocked=achievements.filter(function(a){return a.value>=a.target}).length;
+  const rows=achievements.map(function(a){
+    const done=a.value>=a.target,pct=Math.min(100,a.value/a.target*100);
+    return '<div class="it" style="align-items:flex-start"><span style="font-size:25px">'+(done?a.icon:'🔒')+'</span><div style="flex:1;min-width:0"><b>'+a.name+'</b><br><small>'+a.desc+'</small><div class="bar"><i style="width:'+pct+'%"></i></div><small>'+fmtNum(Math.min(a.value,a.target))+' / '+fmtNum(a.target)+'</small></div><b>'+(done?'✅':'🔒')+'</b></div>';
+  }).join('');
+  ui('<div class="top"><span>🏅 Conquistas</span><span>'+unlocked+'/'+achievements.length+' desbloqueadas</span></div><div class="panel anim-in"><div class="card"><b>Seu progresso</b><div class="bar"><i style="width:'+(unlocked/achievements.length*100)+'%"></i></div><small>'+Math.round(unlocked/achievements.length*100)+'% concluído</small></div>'+rows+'<small>As conquistas são informativas e não alteram moedas, pontuação ou dificuldade.</small><div class="row"><button class="b" onclick="lobby()">Voltar</button></div></div>');
 }
 
 function cfg(){
