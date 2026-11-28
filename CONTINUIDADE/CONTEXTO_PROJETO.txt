@@ -478,3 +478,39 @@ Validação visual:
 Próxima etapa:
 - Confirmar resultado do CI.
 - Prosseguir com auditoria da base funcional e migração modular dos personagens/habilidades, sem inventar correspondência com dados antigos não auditados.
+
+
+============================================================
+DIREÇÃO CORRETA DA RECONSTRUÇÃO — GUIA RECEBIDO (2026-11-28)
+============================================================
+
+O usuário enviou "GUIA COMPLETO: Criando um Jogo Runner estilo Subway Surfers".
+Este guia deve orientar a reconstrução, mas precisa ser ADAPTADO ao Neon Runner original.
+Não transformar o projeto em um runner genérico de retângulos, nem substituir a identidade original.
+
+REFERÊNCIA VISUAL E FUNCIONAL OBRIGATÓRIA:
+- Arquivo principal original: NeonRunner_PLAY.html (base funcional V5 Ascension).
+- V6.html é a versão oficial preservada em main.
+- V7 é linha de teste; rebuild/ é reconstrução experimental.
+- O original é um runner 2D em Canvas com perspectiva pseudo-3D própria, NÃO uma cena Unity 3D.
+- A função P(l,r,h) projeta posição/distância/altura em perspectiva.
+- O render original desenha pista em profundidade, prédios laterais, postes/luzes, obstáculos com escala pela perspectiva, moedas/power-ups e personagem animado.
+- O lobby original tem cenário animado, trem, personagem central, painel de saldo/recorde, missões, evento, clima e navegação por painéis.
+- Identidade: Neon Runner Mega Edition; paleta neon/dinâmica, biomas, efeitos e interface existente.
+- O personagem original é desenhado por Canvas (função dc), com animação; não usar um bloco retangular simples como substituto definitivo.
+
+ADAPTAÇÃO DO GUIA:
+1. Manter controles de três pistas, swipe, pulo, rolagem e ação de hoverboard; adaptar ao input e aos estados já existentes.
+2. Manter obstáculos e colecionáveis com profundidade/perspectiva: trens, barreiras, cones, moedas e power-ups.
+3. Incorporar os sistemas do guia (personagens, habilidades, lobby, loja, economia, missões, ranking, áudio e configurações) usando os dados e nomes do Neon Runner já existentes sempre que possível.
+4. Não importar Jake/Tricky/Fresh ou copiar arte/marca de Subway Surfers; usar os personagens originais Rex, Luna, Kai, Mecânico, Pixel, Zed, Ninja, Atleta, Blaze, Nova, Echo etc.
+5. A arquitetura modular é uma forma de organizar o código, não uma licença para simplificar ou apagar recursos.
+6. Migrar progressivamente a lógica e o desenho de NeonRunner_PLAY.html para rebuild/, preservando mecânicas, interface, saves e compatibilidade.
+7. Não publicar rebuild como substituto até comparação visual/funcional com a referência e testes no navegador.
+
+ERRO DE DIREÇÃO IDENTIFICADO:
+- O rebuild atual mostra uma pista plana retangular, personagem geométrico simples e menu mínimo.
+- Isso não representa o original e não deve ser considerado a versão visual final.
+- A próxima tarefa é reconstruir o renderer com a projeção P(l,r,h), o mundo/pista em perspectiva, personagem animado e o lobby original, antes de acrescentar mais sistemas genéricos.
+
+Guia enviado: conceitos de endless runner em terceira pessoa, três pistas, câmera, obstáculos, power-ups, personagens, lobby, loja, missões, ranking, áudio, UI e otimização. O guia é especificação conceitual; a identidade e as implementações existentes do Neon Runner têm prioridade na adaptação.
