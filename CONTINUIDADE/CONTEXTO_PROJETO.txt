@@ -553,3 +553,9 @@ Próximo passo:
 2. Corrigir erros de sintaxe/testes se aparecerem.
 3. Pedir ao usuário que abra a prévia da branch e validar a composição em seu iPhone.
 4. Refinar cenário, trem e personagem antes de migrar o lobby original.
+
+
+Resultado posterior da validação da Atualização 5:
+- GitHub Actions “Rebuild tests”, execução 46154022479, concluiu com sucesso (conclusion: success) no commit bd52201edec7586036cb945bb8647c4a70ffcbd6.
+- Isso confirma que os testes automatizados existentes passaram; não substitui teste visual em navegador.
+- A publicação automática do GitHub Pages associada à branch ainda estava com status: completed (conclusão: cancelled) quando consultada.
