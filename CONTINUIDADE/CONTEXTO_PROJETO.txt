@@ -290,3 +290,51 @@ A estrutura final pode mudar se a auditoria indicar algo melhor. O ponto obrigat
 - O usuário pediu explicitamente que todas essas decisões e descobertas fossem registradas neste arquivo TXT para continuidade entre conversas.
 - Nesta atualização, apenas o arquivo CONTINUIDADE/CONTEXTO_PROJETO.txt está sendo atualizado; nenhuma lógica do jogo foi reconstruída ainda.
 - Próxima ação técnica: buscar/abrir a NeonRunner_PLAY.html exata no branch e confirmar o diagnóstico R fora de escopo, então planejar migração modular. Não começar adicionando personagens/loja/passe antes de o núcleo estar funcional.
+
+
+============================================================
+17. PRIMEIRA ENTREGA DA RECONSTRUÇÃO MODULAR — 2026-11-28
+============================================================
+
+Foi iniciada a reconstrução na branch v7-mega-update, sem alterar main/V6.
+
+Auditoria adicional:
+- O arquivo NeonRunner_PLAY.html existe na raiz da branch v7-mega-update (135.416 bytes no GitHub; conteúdo retornado com 134.453 caracteres).
+- O título interno identifica a base como “Neon Runner Mega Edition — V5 Ascension”. Portanto, é uma base diferente dos arquivos V6.html e V7.html; não tratar os nomes V5 como se fossem necessariamente a mesma versão.
+- A função step(dt) contém o processamento da contagem regressiva e depois chama sistemas de corrida.
+- A função over() declara um objeto local const R com estatísticas da corrida. A relação exata entre step() e over() ainda precisa ser confirmada por análise completa das chaves/escopos; não assumir que a hipótese R fora de escopo está comprovada apenas por busca textual.
+
+Arquivos criados na pasta rebuild/:
+- index.html
+- css/game.css
+- js/core/state.js
+- js/core/loop.js
+- js/entities/player.js
+- js/systems/input.js
+- js/systems/track.js
+- js/systems/collision.js
+- js/main.js
+- tests/core.test.js
+- package.json
+- README.md
+
+Objetivo desta primeira entrega:
+- Criar uma base independente e modular, sem substituir index.html, V6.html, V7.html ou NeonRunner_PLAY.html.
+- Separar estado, loop, jogador, input, pista, colisão, renderização e testes.
+- Implementar uma corrida mínima com contagem regressiva, três pistas, controles por teclado/toque, pulo, obstáculos, distância e game over.
+- Corrigir a direção física do pulo após revisão inicial.
+
+Commits de criação realizados sequencialmente na branch v7-mega-update. Último commit registrado nesta etapa: fd1716287ac8da497f02beba4eac87b6afe6dd94 (correção da física do pulo). Os arquivos foram adicionados em commits anteriores imediatamente anteriores na mesma branch.
+
+Validação:
+- Testes de regressão foram escritos em rebuild/tests/core.test.js para contagem regressiva, incremento de distância, limites de pista, pulo e pontuação.
+- Os testes automatizados ainda NÃO foram executados nesta sessão.
+- O jogo ainda NÃO foi testado visualmente em navegador/Safari.
+- A pasta rebuild/ é uma fundação inicial de reconstrução, não substitui ainda o jogo completo e não deve ser apresentada como migração integral concluída.
+
+Próximos passos:
+1. Validar sintaxe e executar os testes da pasta rebuild/ em ambiente Node.
+2. Revisar colisão e comportamento de toque em tela pequena.
+3. Mapear com precisão o escopo de step() e over() em NeonRunner_PLAY.html e comparar com V6/V7.
+4. Só depois começar a migração de sistemas visuais e recursos existentes, preservando cada subsistema em módulos separados.
+5. Não apontar o index principal do site para rebuild/ até a base passar pela validação.
