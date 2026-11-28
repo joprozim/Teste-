@@ -514,3 +514,42 @@ ERRO DE DIREÇÃO IDENTIFICADO:
 - A próxima tarefa é reconstruir o renderer com a projeção P(l,r,h), o mundo/pista em perspectiva, personagem animado e o lobby original, antes de acrescentar mais sistemas genéricos.
 
 Guia enviado: conceitos de endless runner em terceira pessoa, três pistas, câmera, obstáculos, power-ups, personagens, lobby, loja, missões, ranking, áudio, UI e otimização. O guia é especificação conceitual; a identidade e as implementações existentes do Neon Runner têm prioridade na adaptação.
+
+
+============================================================
+ATUALIZAÇÃO 5 — PRIMEIRO POLIMENTO VISUAL PSEUDO-3D (2026-11-28)
+============================================================
+
+Nova referência visual:
+- O usuário enviou uma imagem de endless runner em terceira pessoa, vista por trás do personagem, com trilhos, trem lateral, moedas e cenário colorido.
+- A imagem é referência de enquadramento, profundidade e apresentação; não é autorização para copiar personagens, marca ou assets de outro jogo.
+- Direção aprovada: Neon Runner deve ter visual mais caprichado e sensação de corrida em perspectiva, mantendo sua identidade própria.
+
+Implementação feita na branch v7-mega-update:
+- Criado rebuild/js/render/scene.js como módulo separado de renderização.
+- A nova cena usa projeção pseudo-3D por profundidade, com horizonte, escala progressiva, pista/trilhos, dormentes, cenário em camadas, árvores, cabos e trem lateral.
+- Moedas e power-ups agora são desenhados com escala pela profundidade.
+- Obstáculos são desenhados como objetos com volume, em vez de quadrados planos.
+- Personagem agora é desenhado de costas com cabeça, boné, jaqueta, mochila, braços e pernas animados, além do efeito de escudo.
+- O renderer organiza objetos pela profundidade antes de desenhá-los.
+- rebuild/js/main.js passou a importar drawScene() do módulo novo; removida a renderização antiga da pista plana e do jogador em formato de bloco.
+- rebuild/css/game.css recebeu acabamento no HUD, botões, menu e contagem regressiva.
+
+Commits:
+- 545da665e90cbbaa1911ebe28fc56a66bff2068f — renderer pseudo-3D.
+- 0cb956838895fc29789e69471719c70e6b894e9f — integração do renderer modular.
+- bd52201edec7586036cb945bb8647c4a70ffcbd6 — polimento visual da interface.
+
+Limites e validação:
+- Esta é a primeira etapa visual da reconstrução, não a migração completa do renderer original.
+- A projeção é uma implementação nova inspirada no enquadramento da imagem e na ideia de pseudo-3D do Neon Runner; ainda não é uma cópia literal de toda a função P(l,r,h) do original.
+- Os arquivos foram gravados na branch; ainda falta confirmar o resultado do CI após estes commits.
+- Não houve teste visual real em navegador/Safari/iPhone nesta etapa.
+- Revisar em especial a posição do trem em relação à pista, o tamanho do personagem e a leitura da perspectiva em telas estreitas.
+- main/V6 oficial continua intocada.
+
+Próximo passo:
+1. Conferir o CI disparado pelas alterações.
+2. Corrigir erros de sintaxe/testes se aparecerem.
+3. Pedir ao usuário que abra a prévia da branch e validar a composição em seu iPhone.
+4. Refinar cenário, trem e personagem antes de migrar o lobby original.
