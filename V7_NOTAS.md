@@ -13,3 +13,9 @@
 - Verificar desbloqueio Aurora em save de teste com distância suficiente
 - Testar loja e personagens existentes
 - Nenhum teste de navegador foi executado por este commit
+
+
+## V7.1 — estabilidade (em teste)
+- Protege a leitura do modificador de clima contra valores inválidos no save.
+- Mantém o loop de animação ativo se ocorrer uma exceção durante atualização ou desenho; pausa a partida e registra o erro no console para diagnóstico.
+- Ainda precisa de teste real no Safari/iPhone e em desktop. Esta branch não altera a versão oficial.
