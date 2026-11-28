@@ -1,6 +1,7 @@
-import test from"node:test";import assert from"node:assert/strict";import{createInitialState,startRun,finishRun}from"../js/core/state.js";import{updateGame}from"../js/core/loop.js";import{movePlayer,jumpPlayer,updatePlayer}from"../js/entities/player.js";
+import test from"node:test";import assert from"node:assert/strict";import{createInitialState,startRun,finishRun}from"../js/core/state.js";import{updateGame}from"../js/core/loop.js";import{collectCoins}from"../js/systems/collectibles.js";import{movePlayer,jumpPlayer,updatePlayer}from"../js/entities/player.js";
 test("corrida começa em contagem e entra em execução",()=>{const s=startRun(createInitialState());assert.equal(s.phase,"countdown");for(let i=0;i<4;i++)updateGame(s,.25);assert.equal(s.phase,"run");});
 test("distância aumenta depois da contagem",()=>{const s=startRun(createInitialState());for(let i=0;i<4;i++)updateGame(s,.25);const before=s.distance;updateGame(s,.5);assert.ok(s.distance>before);});
 test("jogador muda de pista sem sair dos limites",()=>{const p={lane:1,jump:0,vy:0};movePlayer(p,-1);movePlayer(p,-1);assert.equal(p.lane,0);movePlayer(p,1);movePlayer(p,1);movePlayer(p,1);assert.equal(p.lane,2);});
 test("pulo retorna ao chão",()=>{const p={lane:1,jump:0,vy:0};jumpPlayer(p);for(let i=0;i<100;i++)updatePlayer(p,.02);assert.equal(p.jump,0);});
 test("fim de jogo calcula pontuação",()=>{const s=createInitialState();s.distance=123;s.coins=4;finishRun(s);assert.equal(s.phase,"over");assert.equal(s.score,163);});
+test("coleta moedas na mesma pista e mantém as outras",()=>{const s=createInitialState();s.coinsOnTrack=[{lane:1,z:530},{lane:0,z:530},{lane:1,z:200}];collectCoins(s);assert.equal(s.coins,1);assert.deepEqual(s.coinsOnTrack,[{lane:0,z:530},{lane:1,z:200}]);});
