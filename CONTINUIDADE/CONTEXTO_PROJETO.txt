@@ -456,3 +456,25 @@ Próximas etapas:
 3. Construir sistema de seleção de personagem e habilidades em módulos.
 4. Depois migrar loja/cosméticos, missões, mapas e sistemas avançados.
 5. Validar o núcleo no navegador antes de integrar a reconstrução à página principal.
+
+
+============================================================
+ATUALIZAÇÃO 4 — CI E CORREÇÃO DOS TESTES (2026-11-28)
+============================================================
+
+Foi criado o workflow .github/workflows/rebuild-tests.yml:
+- Executa npm test em rebuild/ com Node.js 22.
+- Dispara em alterações na pasta rebuild/ na branch v7-mega-update e em pull requests que alterem rebuild/.
+- O primeiro ciclo de CI executou os 11 testes: 9 passaram e 2 falharam.
+- A falha foi nos próprios testes de contagem: eles avançavam apenas 1 segundo (4 x 0,25 s), embora a contagem do jogo dure 3 segundos.
+- Os dois testes foram corrigidos para avançar 3 segundos (12 x 0,25 s).
+- Commit da correção: 31b263427252ebf951b9ab75e180d5199d41acbc.
+- Nova execução do workflow: https://github.com/joprozim/Teste-/actions/runs/46145480910.
+- No momento do registro, a nova execução estava em andamento; não registrar como aprovada até consultar o resultado final.
+
+Validação visual:
+- Continua pendente teste real em navegador/Safari/iPhone.
+
+Próxima etapa:
+- Confirmar resultado do CI.
+- Prosseguir com auditoria da base funcional e migração modular dos personagens/habilidades, sem inventar correspondência com dados antigos não auditados.
