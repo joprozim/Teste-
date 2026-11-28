@@ -401,3 +401,58 @@ Próxima etapa:
 2. Corrigir eventuais regressões e validar swipe/toque no Safari.
 3. Migrar progressão, velocidade gradual, recorde e telas de resultado.
 4. Auditar a NeonRunner_PLAY.html e migrar recursos da referência em módulos, sem transformar rebuild em monólito.
+
+
+============================================================
+ATUALIZAÇÃO 3 — PROGRESSÃO E CARREIRA LOCAL (2026-11-28)
+============================================================
+
+Novidades adicionadas em rebuild/:
+- Progressão automática de nível: um nível a cada 500 metros.
+- Velocidade aumenta conforme o nível, com limite máximo para evitar crescimento infinito.
+- Pontuação final exibida na tela de resultado.
+- Recorde pessoal salvo localmente.
+- Carteira de moedas acumuladas entre partidas.
+- Contador de partidas e distância total registrados no armazenamento local.
+- Menu inicial mostra recorde e moedas totais.
+- Tela de fim de jogo mostra distância, pontuação, moedas coletadas e recorde.
+- Botão para voltar ao menu sem recarregar a página.
+- Salvamento protegido por try/catch para não interromper a partida se o armazenamento do navegador estiver indisponível.
+
+Arquivos alterados:
+- rebuild/js/core/state.js
+- rebuild/js/systems/track.js
+- rebuild/js/systems/collectibles.js
+- rebuild/js/main.js
+- rebuild/index.html
+- rebuild/css/game.css
+- rebuild/tests/core.test.js
+- rebuild/README.md
+
+Arquivo novo:
+- rebuild/js/systems/progress.js
+
+Commits desta etapa:
+- 55b9802 — estado com nível e moedas da partida.
+- 655571d — progressão de nível e velocidade.
+- a4d79e32 — contagem de moedas coletadas na partida.
+- adf1855 — HUD e telas de resultado.
+- 6b446bb — integração de recorde e carteira no jogo.
+- ff23ef3 — estilos das telas e registros.
+- 90d3404 — testes de progressão e coleta.
+- 85ed485 — documentação atualizada.
+- 5bb6627 — persistência local da carreira.
+
+Validação:
+- Os arquivos foram gravados na branch pelo GitHub.
+- Os testes automatizados ainda NÃO foram executados nesta sessão.
+- Não houve teste visual em navegador ou Safari/iPhone.
+- A persistência depende do armazenamento local do navegador; apagar os dados do site pode apagar a carreira salva.
+- A V6 oficial em main continua intocada.
+
+Próximas etapas:
+1. Configurar execução automática dos testes no GitHub Actions.
+2. Fazer auditoria e migração de personagens e habilidades da base de referência.
+3. Construir sistema de seleção de personagem e habilidades em módulos.
+4. Depois migrar loja/cosméticos, missões, mapas e sistemas avançados.
+5. Validar o núcleo no navegador antes de integrar a reconstrução à página principal.
