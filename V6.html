@@ -1518,14 +1518,18 @@ function cfg(){
     <div class="row">
       <button class="b s" onclick="exportSave()">Exportar Save</button>
       <button class="b s" onclick="importSave()">Importar Save</button>
+      <button class="b s" onclick="backupSave()">Criar Backup</button>
+      <button class="b s" onclick="restoreBackup()">Restaurar Backup</button>
       <button class="b s" onclick="alert('Neon Runner Mega Edition — Dados salvos localmente no navegador.')">Créditos & Privacidade</button>
       <button class="b s" onclick="if(confirm('Apagar progresso?')){localStorage.removeItem(KEY);location.reload()}">Resetar</button>
     </div>
     ${back()}
   </div><div></div>`);
 }
+function backupSave(){try{sv();localStorage.setItem(KEY+'_backup',JSON.stringify(S));toast('Backup criado neste navegador!');}catch(e){alert('Não foi possível criar o backup neste navegador.');}}
+function restoreBackup(){const raw=localStorage.getItem(KEY+'_backup');if(!raw){alert('Nenhum backup encontrado neste navegador.');return;}if(!confirm('Restaurar o backup salvo neste navegador? O progresso atual será substituído.'))return;try{const parsed=JSON.parse(raw);if(!parsed||typeof parsed!=='object'||!Array.isArray(parsed.owned)||!Number.isFinite(Number(parsed.coins)))throw new Error('invalid');localStorage.setItem(KEY,JSON.stringify(parsed));location.reload();}catch(e){alert('O backup está inválido e não foi restaurado.');}}
 function exportSave(){const b64=btoa(unescape(encodeURIComponent(JSON.stringify(S))));navigator.clipboard?.writeText(b64);prompt('Copie seu código de save:',b64);}
-function importSave(){const raw=prompt('Cole seu código de save:');if(!raw)return;try{const parsed=JSON.parse(decodeURIComponent(escape(atob(raw.trim()))));localStorage.setItem(KEY,JSON.stringify(parsed));location.reload();}catch(e){alert('Código de save inválido!')}}
+function importSave(){const raw=prompt('Cole seu código de save:');if(!raw)return;try{const parsed=JSON.parse(decodeURIComponent(escape(atob(raw.trim()))));if(!parsed||typeof parsed!=='object'||!Array.isArray(parsed.owned)||!Number.isFinite(Number(parsed.coins)))throw new Error('invalid');const current=localStorage.getItem(KEY);if(current)localStorage.setItem(KEY+'_backup',current);localStorage.setItem(KEY,JSON.stringify(parsed));location.reload();}catch(e){alert('Código de save inválido. O progresso atual foi preservado.')}}
 
 // --- INÍCIO DA CORRIDA (expandido V5) ---
 function startCutscene(){cutscene=.75;snd(450,.25,'sine',.08,850);setTimeout(go,720);}
