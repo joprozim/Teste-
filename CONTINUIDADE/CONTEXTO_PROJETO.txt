@@ -204,3 +204,89 @@ Não alterar a main.
 Não começar adicionando novidades.
 Primeiro auditar e reconstruir o fluxo da corrida, usando V4.html como referência funcional e V7.html como base de recursos.
 Trabalhar em etapas pequenas e registrar neste arquivo cada mudança, teste e pendência.
+
+
+============================================================
+12. NOVA DECISÃO DO USUÁRIO — RECONSTRUÇÃO COMPLETA E MODULAR
+============================================================
+
+O usuário decidiu que não quer continuar remendando a V7 monolítica. A partir de agora, o objetivo é criar um produto novo e funcional, reconstruindo completamente a lógica do jogo a partir de uma base que já funcionava.
+
+Diretrizes confirmadas pelo usuário:
+- Usar a base funcional identificada no guia/texto que o usuário enviou e a versão funcional correspondente como referência.
+- Analisar o código de referência antes de implementar.
+- Recriar a lógica completa do jogo, não apenas corrigir uma ou duas linhas.
+- NÃO colocar tudo em um único arquivo HTML/JS gigante.
+- Separar o projeto em arquivos e módulos com responsabilidades claras.
+- Construir uma nova versão funcional, reaproveitando o que for seguro do código antigo.
+- A V7 monolítica é referência de recursos, não deve ser tratada como arquitetura a preservar.
+- Fazer desenvolvimento em etapas, validar cada etapa e manter o jogo executável.
+- Não prometer que nada vai quebrar ou que estará perfeito sem testes. Ser transparente sobre o que foi testado e o que não foi.
+- Respostas curtas e diretas para economizar espaço/contexto.
+- Não criar novas branches. Continuar somente em v7-mega-update.
+- Não alterar main/V6 oficial sem autorização explícita.
+
+============================================================
+13. ACHADO IMPORTANTE DO GUIA ENVIADO PELO USUÁRIO
+============================================================
+
+O usuário compartilhou um documento de análise técnica com uma descoberta concreta sobre o bug:
+
+- Um bloco de estatísticas foi inserido dentro de step() na V6/V7.
+- Esse bloco referencia R.dist, R.coins, R.jumps e R.sk.
+- A variável/objeto R só existe dentro de over().
+- Portanto, quando o jogo sai da contagem regressiva e entra na fase de corrida, step() tenta acessar R fora do escopo e ocorre o erro "R is not defined".
+- Esse erro explica o personagem parado logo após a contagem 3-2-1, conforme o diagnóstico do documento enviado pelo usuário.
+- A NeonRunner_PLAY.html foi identificada no documento como base funcional e teria passado por um teste automatizado de 3.000 quadros sem erros.
+- O documento também alerta que existem arquivos/versões com nomes V5 que não devem ser confundidos; verificar exatamente qual arquivo é a base funcional antes de copiar ou migrar.
+
+IMPORTANTE:
+- Esse achado veio do documento de diagnóstico do usuário e deve ser tratado como a hipótese/causa identificada por aquele documento.
+- Antes de alterar o código, reabrir a fonte exata no GitHub e conferir o trecho/escopo de R para confirmar no arquivo atual.
+- Não confundir NeonRunner_PLAY.html com V4.html, V6.html ou V7.html.
+- Não continuar afirmando que a causa está desconhecida sem antes considerar este diagnóstico concreto.
+- Não fazer substituições automáticas ou patches no escuro.
+
+============================================================
+14. ARQUITETURA PROPOSTA PARA O NOVO JOGO
+============================================================
+
+Criar uma estrutura modular, ajustada após a auditoria do código-base. Exemplo inicial:
+
+- index.html — página de entrada e montagem da interface.
+- css/ — estilos separados por interface/tela, sem duplicar CSS desnecessariamente.
+- js/core/ — estado central, inicialização, loop principal, tempo e física/movimentação.
+- js/entities/ — jogador, obstáculos, itens e entidades.
+- js/systems/ — colisões, geração de pista, progressão, clima e sistemas especiais.
+- js/ui/ — lobby, HUD, menus, loja, passe e telas de resultado.
+- js/data/ — personagens, habilidades, itens, mapas e configurações.
+- js/storage/ — save, migração, importação/exportação e backup.
+- tests/ — testes automatizados para transições de estado, movimento, colisões e regressões.
+
+A estrutura final pode mudar se a auditoria indicar algo melhor. O ponto obrigatório é manter responsabilidades separadas e evitar um único arquivo monolítico.
+
+============================================================
+15. ORDEM DE IMPLEMENTAÇÃO DA RECONSTRUÇÃO
+============================================================
+
+1. Reabrir e auditar o arquivo funcional exato NeonRunner_PLAY.html identificado pelo documento do usuário.
+2. Identificar a versão de origem e confirmar o teste de 3.000 quadros descrito no documento, sem assumir que foi executado nesta sessão.
+3. Mapear o fluxo de início, contagem regressiva, corrida, movimento, colisões, game over e retorno ao lobby.
+4. Criar a estrutura modular mínima.
+5. Migrar primeiro apenas o núcleo jogável: estado, jogador, pista, input, movimento, obstáculos, colisões e loop.
+6. Criar testes de regressão para garantir que a transição countdown -> run realmente atualiza a distância e a posição do personagem.
+7. Comparar comportamento com a base funcional.
+8. Só então migrar loja, personagens, cosméticos, passe, missões, clima, eventos e outros recursos, um subsistema por vez.
+9. Fazer testes automatizados disponíveis e pedir ao usuário teste real no Safari/iPhone; nunca afirmar teste visual/browser que não foi realizado.
+10. Atualizar este arquivo após cada etapa com arquivos criados, alterações, commits, resultados de testes e pendências.
+11. Manter a versão oficial main/V6 intacta até aprovação explícita.
+
+============================================================
+16. ESTADO APÓS A ÚLTIMA CONVERSA
+============================================================
+
+- O usuário pediu desculpas por ter perdido a paciência; manter comunicação respeitosa e colaborativa, sem dramatizar.
+- O usuário autorizou a reconstrução completa da lógica em um produto novo e modular.
+- O usuário pediu explicitamente que todas essas decisões e descobertas fossem registradas neste arquivo TXT para continuidade entre conversas.
+- Nesta atualização, apenas o arquivo CONTINUIDADE/CONTEXTO_PROJETO.txt está sendo atualizado; nenhuma lógica do jogo foi reconstruída ainda.
+- Próxima ação técnica: buscar/abrir a NeonRunner_PLAY.html exata no branch e confirmar o diagnóstico R fora de escopo, então planejar migração modular. Não começar adicionando personagens/loja/passe antes de o núcleo estar funcional.
