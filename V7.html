@@ -1058,7 +1058,7 @@ function shop(t){
       const ascReq=ASCENSION_DATA[c.id]||[];
       const canAsc=o&&ascLv<ascReq.length&&canAscend(c.id);
       const tree=HERO_TREE[c.id]||[];
-      const buyBtn=c.keys?`<button class="b" onclick="buyC('${c.id}')">🔑 ${c.keys}</button>`:`<button class="b" onclick="buyC('${c.id}')">🪙 ${c.p}</button>`;
+      const buyBtn=c.id==='aurora'?`<button class="b s" disabled>🎟️ Passe (60.000 m)</button>`:c.keys?`<button class="b" onclick="buyC('${c.id}')">🔑 ${c.keys}</button>`:`<button class="b" onclick="buyC('${c.id}')">🪙 ${c.p}</button>`;
       return `<div class="it" onmouseenter="prevSel='${c.id}'" style="flex-direction:column;align-items:stretch">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
           <div><b style="color:${RC[c.r]}">${c.n}</b> <small>${c.r} · Nv.${lv}/5 · Asc.${ascLv}/${ascReq.length}</small><br><small>${c.a}</small></div>
