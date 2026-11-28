@@ -1,15 +1,20 @@
 # Neon Runner V6 Evolution
 
-A V6 foi criada em uma branch separada a partir da V5, sem alterar a branch `main` nem substituir os arquivos existentes.
+Esta versão fica isolada na branch `v6-expansion`. A branch `main` e os arquivos da V5 não foram alterados.
 
-## Novidade
-- Painel de estatísticas de carreira no botão 📊 do lobby.
-- Contadores de corridas, distância, moedas, pulos, manobras, tempo e melhor pontuação.
-- Metas de carreira calculadas a partir das estatísticas.
-- Migração aditiva: os dados antigos continuam carregando; as estatísticas V6 contam as corridas feitas nessa versão.
+## Melhorias incluídas
+- Painel de estatísticas de carreira: corridas, distância, moedas, pulos, manobras, tempo e melhor pontuação.
+- Dez conquistas com barras de progresso.
+- Acesso aos painéis pelo lobby.
+- Backup local do progresso e restauração manual.
+- Importação de save com validação básica e cópia de segurança automática antes de substituir o save atual.
+- Foco de teclado visível e respeito à preferência de movimento reduzido do sistema.
+- `index.html` desta branch abre a V6 diretamente.
 
-## Arquivo
-- `V6.html`: versão independente baseada no `NeonRunner_PLAY.html` da branch `main`.
+## Compatibilidade
+- Mantém a chave de armazenamento original do jogo e adiciona apenas o objeto `v6Stats`.
+- As conquistas são informativas e não alteram física, colisões, velocidade, moedas ou dificuldade.
+- O backup fica no mesmo navegador/dispositivo; para transferir progresso entre dispositivos, use Exportar/Importar Save.
 
 ## Testes pendentes
-Abrir no navegador e testar em celular e desktop. A V5 e a branch `main` foram mantidas intactas.
+A versão foi atualizada no GitHub, mas ainda precisa de teste manual em navegador desktop e celular. Não foi publicada na branch principal.
